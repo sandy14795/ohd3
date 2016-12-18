@@ -1,0 +1,63 @@
+{% extends "base1.html" %}
+{% load staticfiles %}
+
+{% block title %}Developers |Thapar University{%  endblock %}
+
+{% block head %}
+    <meta charset="UTF-8">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <style>
+body{
+  background: #BDFCC9;
+}
+
+a{
+  outline: none;
+}
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+<div class="row">
+<div class="col-xs-3 col-xs-offset-2">
+<a href="https://www.facebook.com/profile.php?id=100008106878477" style="outline: none;"><img class="img-circle center-block" src="{% static 'img/sandy.jpg' %}" alt="Generic placeholder image" width="140" height="140">
+          <h2 align="center" style="font-weight:normal;font-variant:small-caps;color:#7E7E8C;letter-spacing:1pt;word-spacing:2pt;font-size:20px;text-align:center;font-family:palatino linotype, palatino, serif;line-height:1;">"THE BRAIN"</h2>
+          <h2 align="center" style="color: grey;"> Sandeep Singh </h2>
+          </a>
+          <hr>
+          
+</div>
+<div class="col-xs-3 col-xs-offset-2">
+<a href="https://www.facebook.com/profile.php?id=100002197982737" style="outline: none;"><img class="img-circle center-block" src="{% static 'img/sahil.jpg' %}" alt="Generic placeholder image" width="140" height="140">
+          <h2 class="text-center" style="font-weight:normal;font-variant:small-caps;color:#7E7E8C;letter-spacing:1pt;word-spacing:2pt;font-size:20px;text-align:center;font-family:palatino linotype, palatino, serif;line-height:1;">"THE IMAGINATION"</h2><h2 align="center" style="color: grey;"> Sahil Garg </h2></a>
+          <hr>
+</div>
+</div>
+
+<br>
+
+<div class="row">
+<div class="col-xs-3 col-xs-offset-2">
+<a href="https://www.facebook.com/shivali.maheshwari.7?fref=ts" style="outline: none;"><img class="img-circle center-block" src="{% static 'img/shivali.jpg' %}" alt="Generic placeholder image" width="140" height="140">
+          <h2 style="font-weight:normal;font-variant:small-caps;color:#7E7E8C;letter-spacing:1pt;word-spacing:2pt;font-size:20px;text-align:center;font-family:palatino linotype, palatino, serif;line-height:1;">"THE EYE"</h2><h2 align="center" style="color: grey;"> Shivali Maheshwari </h2>
+          <hr></a>
+          
+</div>
+<div class="col-xs-3 col-xs-offset-2">
+<a href="https://www.facebook.com/saksham.sankhyan" style="outline: none;"><img class="img-circle center-block" src="{% static 'img/saksham.jpg' %}" alt="Generic placeholder image" width="140" height="140">
+          <h2 style="font-weight:normal;font-variant:small-caps;color:#7E7E8C;letter-spacing:1pt;word-spacing:2pt;font-size:20px;text-align:center;font-family:palatino linotype, palatino, serif;line-height:1;">"THE STYLE"</h2><h2 align="center" style="color: grey;"> Saksham Sankhyan </h2>
+          <hr></a>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-4 col-xs-offset-4">
+<a href="https://www.facebook.com/namdevnischay" style="outline: none;"><img class="img-circle center-block" src="{% static 'img/nis.jpg' %}" alt="Generic placeholder image" width="140" height="140">
+          <h2 style="font-weight:normal;font-variant:small-caps;color:#7E7E8C;letter-spacing:1pt;word-spacing:2pt;font-size:20px;text-align:center;font-family:palatino linotype, palatino, serif;line-height:1;">"SPECIAL THANKS"</h2><h2 align="center" style="color: grey;"> Nischay Namdev </h2>
+          <hr></a>
+          </div></div>
+{% endblock %}

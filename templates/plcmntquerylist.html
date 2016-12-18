@@ -1,0 +1,135 @@
+{% extends "base1.html" %}
+{% load staticfiles %}
+
+{% block title %}Placements |Thapar University{%  endblock %}
+
+{% block head %}
+    <meta charset="UTF-8">
+
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+        <style>
+
+.ques {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+}
+
+.ans {
+  height: 40px;
+  width: 75px;
+  color:#500000;
+  text-align: center;
+  text-align: center;
+  vertical-align: middle;
+
+  
+}
+
+tag {
+  background-color:#E0E0E0;
+  color:#500000;
+}
+
+</style>
+
+    
+{% endblock %}
+
+
+{% block body %}
+<div class="col-xs-7 col-xs-offset-1">
+<p class="lead"> Placements </p>
+<hr>
+{% for q in query %}
+  <div class="row">
+  <div class="col-xs-1 ans"><small><div class="ques">{{ q.answers.count }}</div>Answers</small></div>
+  <div class="col-xs-1 ans"><small><div class="ques">{{ q.hits }}</div>Views</small></div>
+  <p>
+     <a class="ques" href="{% url 'plcmntquerydetail' id=q.id %}">{{ q.title }}</a>
+    <br/>
+    <!-- {% for tag in question.tags.all %}
+    <a href="/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
+    {% endfor %} -->
+     Tags :{% for tagt in q.tags.all %}
+      <a href="{% url 'tagt' tag=tagt.slug %}"><tag>{{ tagt.slug }}</tag></a>,
+      {% endfor %}
+    <small> {{ q.timestamp|timesince}} ago</small>
+  </p>
+</div>
+<hr>
+
+{% endfor %}
+<div class='row'>
+<div class='col-xs-4 col-xs-offset-4'>
+<div class="pagination">
+    <span class="step-links">
+        {% if query.has_previous %}
+            <a href="?page={{ query.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ query.number }} of {{ query.paginator.num_pages }}.
+        </span>
+
+        {% if query.has_next %}
+            <a href="?page={{ query.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+</div></div>
+</div>
+
+
+<div class="row">
+
+
+<div class="col-xs-2 col-xs-offset-1">
+
+
+
+</div>
+
+
+<div class="col-xs-2 col-xs-offset-1">
+<div class="cont" style="background-color: #FFFACD; height: 400px; text-align: center;border-style: solid; border-color: #f1a552;">
+<br>
+<div class="cont" style="background-color: #FFFACD; height: 350px; margin-left: 5%; margin-right: 5%; text-align: center;">
+
+{% if user.is_authenticated %}
+<img src="{% static 'img/user.png' %}" class="img-responsive center-block" >
+
+<small>{{ user.username }} </small>
+<hr>
+<a href="{% url 'ownprofile' %}"> <span class="glyphicon glyphicon-user"></span>&nbsp;My Profile </a> |&nbsp; 
+              <a href="{% url 'account_logout' %}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a> 
+              <hr>
+
+              <a href="{% url 'myques' %}" ><span class="glyphicon glyphicon-th-list"></span> My Questions </a>
+              <hr>
+                {% else %}
+                
+                <a href="{% url 'account_login' %}"><span class="glyphicon glyphicon-log-in"></span>&nbsp;SIGN IN</a>
+                <hr>
+                <a href="{% url 'account_signup' %}"><span class="glyphicon glyphicon-glass"></span>&nbsp;REGISTER</a>
+                <hr>
+                {% endif %}
+                <a href="{% url 'query' %}" ><span class="glyphicon glyphicon-bullhorn"></span> Ask Question </a>
+                <hr>
+                {% if not user.is_authenticated %}
+                <h3 style=" margin: 50px auto;
+  text-align: center;
+  text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.8);
+  color: #333;
+  opacity: 0.4;
+  font: 700 30px 'Bitter';">  Make Effort To ASK </h3>
+{% endif %}
+ </div>
+</div>
+
+
+</div>
+
+</div>
+
+</div></div>
+{% endblock %}

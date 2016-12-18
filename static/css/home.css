@@ -1,0 +1,34 @@
+/*body
+{
+	background-color: #eee ;
+}*/
+
+
+.wmd-panel
+{
+	margin-right: 0px !important ;
+	margin-left: 0px !important ;
+	min-width: 100%   !important;
+	
+}
+
+
+
+.ques {
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+}
+
+
+
+.ans {
+	height: 40px;
+	width: 75px;
+	color:#500000;
+	text-align: center;
+	text-align: center;
+	vertical-align: middle;
+
+	
+}
+

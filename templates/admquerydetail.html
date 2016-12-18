@@ -1,0 +1,289 @@
+{% extends "base1.html" %}
+{% load staticfiles %}
+{% load markdown_deux_tags %}
+{% load crispy_forms_tags %}
+{% block title %}Admissions |Thapar University{%  endblock %}
+
+{% block head %}
+    <meta charset="UTF-8">
+
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+
+    <style>
+
+.glyphicon-glyphicon-triangle-top{
+
+font-size: 30px;
+
+}
+
+.wmd-panel
+{
+  margin-right: 0px !important ;
+  margin-left: 0px !important ;
+  min-width: 100%   !important;
+  
+}
+tag {
+  background-color:#E0E0E0;
+  color:#500000;
+}
+
+    </style>
+    
+{% endblock %}
+{% block head_extra %}
+
+{{ answer_form.media }}
+    
+{% endblock %}
+
+{% block body %}
+
+
+ 
+{% if message %}
+<div class="alert alert-danger" role="alert">{{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+{% endif %}
+
+
+
+<div class="row">
+<div class="col-xs-7 col-xs-offset-1">
+   <h3>{{instance.title}} </h3>  
+  <strong>( {{instance.admission_Program }} ) </strong>
+    <br>
+        Tags :{% for tagt in instance.tags.all %}
+      <a href="{% url 'tagt' tag=tagt.slug %}"><tag>{{ tagt.slug }}</tag></a>,
+      {% endfor %}
+   <hr>
+   </div>
+   </div>
+   <div class="row">
+<div class="col-xs-7 col-xs-offset-1">
+  <small class="pull-right">Posted by <a href="{% url 'profile' id=p %}">{{ instance.user}}</a></small>
+  <br><br>
+  {{ instance.content|markdown|linebreaks }}
+ 
+
+
+  
+  <p>
+    {% if user = instance.user  %}
+   
+  
+  <a class="pull-right" href="{% url 'admquerydel' id=instance.id %}">
+          <span class="glyphicon glyphicon-trash"></span> Delete
+        </a> 
+
+        <a class="pull-right" href="{% url 'admqueryedit' id=instance.id %}">
+          <span class="glyphicon glyphicon-pencil"></span> Edit &nbsp;
+        </a>
+    
+    {% endif %}
+
+   {% if user.is_authenticated %}
+  {% if user != instance.user %}
+
+  <div class="lead"> Your Answer </div>
+  <hr>
+  <form method="POST" action="."> {%  csrf_token %}
+  {{ answer_form|crispy }}
+
+  <input type="submit" value="Post Answer" class="btn btn-default"></input>
+  </form>
+  {% endif %}
+
+  {% else %}
+
+<p><strong>Sign in to post answers</strong></p>
+{% endif %}
+
+ 
+<br><br>
+  <div class="lead"> Answers    </div>
+  <small> ( Answers highlighted in light green color are posted by staff )</small>
+  <hr>
+  {% for i in answers %}
+   
+{% if '@thapar.edu' in i.user.email %}
+      {% if '15@thapar.edu' in i.user.email %}
+      <blockquote style="background-color: #fcfac9 ;" >
+     
+      {% elif '14@thapar.edu' in i.user.email %}
+      <blockquote style="background-color: #fcfac9 ;" >
+
+      {% elif '16@thapar.edu' in i.user.email %}
+      <blockquote style="background-color: #fcfac9 ;" >
+
+      {% elif '17@thapar.edu' in i.user.email %}
+      <blockquote style="background-color: #fcfac9 ;" >
+
+      {% elif '18@thapar.edu' in i.user.email %}
+      <blockquote style="background-color: #fcfac9 ;" >
+
+      {% else %}
+      <blockquote style="background-color:  #9fdf9f ;" >
+
+      {% endif %}
+
+
+
+  
+
+
+{% elif i.user.is_staff %}
+
+   <blockquote style="background-color:  #9fdf9f ;" >
+
+{% elif 'froshteam1' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >
+
+{% elif 'froshteam2' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >
+{% elif 'froshhead' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >
+
+    {% elif 'froshteam3' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >
+    {% elif 'froshteam4' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >
+    {% elif 'froshteam5' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >
+    {% elif 'froshteam6' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >   
+        {% elif 'froshteam7' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >
+    {% elif 'froshteam8' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >
+    {% elif 'froshteam9' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >
+    {% elif 'froshteam10' == i.user.username %}   
+    <blockquote style="background-color:  #9fdf9f ;" >  
+   {% else %}
+
+  <blockquote style="background-color: #fcfac9 ;" >
+
+{% endif %}
+
+  <p>{{ i.answer_text|markdown |linebreaks }}</p>
+  <footer>Posted by {{ i.user}} | {{ i.pub_date|timesince}} ago | {% if i.children.count > 0 %} {% if i.children.count <= 1 %} <a class="comment-reply-btn" href="#">{{i.children.count}} comment </a>|{% endif %} {% if i.children.count > 1 %}<a class="comment-reply-btn" href="#"> {{ i.children.count}} comments</a> |{% endif %} {% endif %}   <a class="comment-reply-btn" href="#">Reply </a>          <div class="pull-right"> 
+
+
+  {% if user.is_authenticated %}
+      
+        
+          
+          <a data-toggle="tooltip" data-placement="top" title="Vote Up this answer" href="/voteadm/{{ instance.id }}/{{ i.id }}/0/"><span class=" glyphicon glyphicon-triangle-top" aria-hidden="true"></span></a> 
+          
+
+<b>{{ i.votes }}</b>
+
+          <a  data-toggle="tooltip" data-placement="bottom" title="Vote Down this answer" href="/voteadm/{{ instance.id }}/{{ i.id }}/1/"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></a>
+
+
+      {% else %} 
+
+<p>{{ i.votes }} votes </p>
+
+      {% endif %}  </div></footer>
+
+<div class="answer-reply" style="display: none;">
+    {% for reply in i.children %}
+     <blockquote style="background-color: #eee ;" >
+        <p>{{ reply.answer_text|linebreaks }}</p>
+        <footer>Posted by {{ reply.user}} | {{ reply.pub_date|timesince}} ago</footer>
+        </blockquote>
+
+  {% endfor %}    
+{% if user.is_authenticated %}
+  <form method="POST" action="."> {%  csrf_token %}
+  {{ reply_form|crispy }}
+  <input type="hidden" name="parent_id" value="{{ i.id }}"></input>
+  <input type="submit" value="Add Comment" class="btn btn-default"></input>
+  </form>
+    {% else %}
+
+<p><strong>Sign in to post comments</strong></p>
+{% endif %}
+</div>
+</blockquote>
+<hr>
+  
+  {% endfor %}
+
+
+
+
+</div>
+
+
+
+
+
+<div class="row">
+<div class="col-xs-2 col-xs-offset-1">
+
+<p style="color: #999;
+font-size: 14px;"> asked &nbsp; {{ instance.timestamp|timesince }} ago </p>
+<p style="color: #999;
+font-size: 14px;"> {% if instance.answers.count > 0 %} {% if instance.answers.count <= 1 %} {{instance.answers.count}}&nbsp;answer {% else %} {{ instance.answers.count}}&nbsp;answers  {% endif %} {% else %} {{ instance.answers.count}}&nbsp;answers{% endif %} </p>
+<!-- <p style="color: #999;
+font-size: 14px;"> viewed &nbsp; {{ instance.views }} times </p> -->
+
+</div>
+
+
+<div class="col-xs-2 col-xs-offset-1">
+<div class="cont" style="background-color: #FFFACD; height: 400px; text-align: center; border-style: solid; border-color: #f1a552;">
+<br>
+<div class="cont" style="background-color: #FFFACD; height: 350px; margin-left: 5%; margin-right: 5%; text-align: center;">
+
+{% if user.is_authenticated %}
+<img src="{% static 'img/user.png' %}" class="img-responsive center-block" >
+
+<small>{{ user.username }} </small>
+<hr>
+<a href="{% url 'ownprofile' %}"> <span class="glyphicon glyphicon-user"></span>&nbsp;My Profile <a> |&nbsp; 
+              <a href="{% url 'account_logout' %}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a> 
+              <hr>
+
+              <a href="{% url 'myques' %}" ><span class="glyphicon glyphicon-th-list"></span> My Questions </a>
+              <hr>
+                {% else %}
+                
+                <a href="{% url 'account_login' %}"><span class="glyphicon glyphicon-log-in"></span>&nbsp;SIGN IN</a>
+                <hr>
+                <a href="{% url 'account_signup' %}"><span class="glyphicon glyphicon-glass"></span>&nbsp;REGISTER</a>
+                <hr>
+                {% endif %}
+                <a href="{% url 'query' %}" ><span class="glyphicon glyphicon-bullhorn"></span> Ask Question </a>
+                <hr>
+{% if not user.is_authenticated %}
+                <h3 style=" margin: 50px auto;
+  text-align: center;
+  text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.8);
+  color: #333;
+  opacity: 0.4;
+  font: 700 30px 'Bitter';">  Make Effort To ASK </h3>
+{% endif %}
+                
+                </div>
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

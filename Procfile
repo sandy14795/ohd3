@@ -1,0 +1,1 @@
+web: python ohd/manage.py collectstatic --noinput ; gunicorn ohd.wsgi:application 

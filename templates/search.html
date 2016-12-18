@@ -1,0 +1,145 @@
+{% extends "base1.html" %}
+{% load staticfiles %}
+
+{% block title %}QueriT {%  endblock %}
+
+{% block head %}
+    <meta charset="UTF-8">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <style>
+
+.ques {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+}
+
+.ans {
+  height: 40px;
+  width: 75px;
+  color:#500000;
+  text-align: center;
+  text-align: center;
+  vertical-align: middle;
+
+  
+}
+tag {
+  background-color:#E0E0E0;
+  color:#500000;
+}
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+<div class="row">
+<div class="col-xs-7 col-xs-offset-1">
+{% if all %}
+
+<h3 class="lead"> {{ count}} Results Found ! </h3>
+<hr>
+
+
+{% for q in all %}
+  <div class="row">
+  <div class="col-sm-1 ans"><small><div class="ques">{{ q.answers.count }}</div>Answers</small></div>
+  <div class="col-sm-1 ans"><small><div class="ques">{{ q.hits }}</div>Views</small></div>
+  <p>
+     <a class="ques" href="{{ q.get_absolute_url }}">{{ q.title }}</a>
+    <br/>
+    <!-- {% for tag in question.tags.all %}
+    <a href="/tag/{{ tag.slug|slugify }}/"><tag>{{ tag.slug }}</tag></a>
+    {% endfor %} -->
+         Tags :{% for tagt in q.tags.all %}
+      <a href="{% url 'tagt' tag=tagt.slug %}"><tag>{{ tagt.slug }}</tag></a>,
+      {% endfor %}
+    <small> {{ q.timestamp|timesince}} ago</small>
+  </p>
+</div>
+<hr>
+
+{% endfor %}
+<div class='row'>
+<div class='col-md-4 col-md-offset-4'>
+<div class="pagination">
+    <span class="step-links">
+        {% if all.has_previous %}
+            <a href="?page={{ all.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ all.number }} of {{ all.paginator.num_pages }}.
+        </span>
+
+        {% if all.has_next %}
+            <a href="?page={{ all.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+</div></div>
+</div>
+{% else %}
+
+<div class="alert alert-warning" role="alert">No Questions are available!</div>
+</div>
+{% endif %}
+
+
+
+<div class="row">
+
+<div class="col-xs-2 col-xs-offset-1">
+
+
+
+
+</div>
+
+
+<div class="col-xs-2 col-xs-offset-1">
+<div class="cont" style="background-color: #FFFACD; height: 400px; text-align: center; border-style: solid; border-color: #f1a552;">
+<br>
+<div class="cont" style="background-color: #FFFACD; height: 350px; margin-left: 5%; margin-right: 5%; text-align: center;">
+
+{% if user.is_authenticated %}
+<img src="{% static 'img/user.png' %}" class="img-responsive center-block" >
+
+<small>{{ user.username }} </small>
+<hr>
+<a href="{% url 'ownprofile' %}"> <span class="glyphicon glyphicon-user"></span>&nbsp;My Profile </a> |&nbsp; 
+              <a href="{% url 'account_logout' %}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a> 
+              <hr>
+
+              <a href="{% url 'myques' %}" ><span class="glyphicon glyphicon-th-list"></span> My Questions </a>
+              <hr>
+                {% else %}
+                
+                <a href="{% url 'account_login' %}"><span class="glyphicon glyphicon-log-in"></span>&nbsp;SIGN IN</a>
+                <hr>
+                <a href="{% url 'account_signup' %}"><span class="glyphicon glyphicon-glass"></span>&nbsp;REGISTER</a>
+                <hr>
+                {% endif %}
+                <a href="{% url 'query' %}" ><span class="glyphicon glyphicon-bullhorn"></span> Ask Question </a>
+                <hr>
+                {% if not user.is_authenticated %}
+                <h3 style=" margin: 50px auto;
+  text-align: center;
+  text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.8);
+  color: #333;
+  opacity: 0.4;
+  font: 700 30px 'Bitter';">  Make Effort To ASK </h3>
+{% endif %}
+ </div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+</div></div>
+{% endblock %}
